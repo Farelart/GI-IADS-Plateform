@@ -24,20 +24,16 @@ def ingestion():
         if file_extension.lower() in (".sql"):
             sql_script = uploaded_file.read().decode('utf-8')
 
-            # Create a SQLite in-memory database
             conn = sqlite3.connect(':memory:')
             cursor = conn.cursor()
 
-            # Execute the SQL script
             cursor.executescript(sql_script)
 
-            # Fetch all table names from the database
             cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
             tables = cursor.fetchall()
             table_names = [table[0] for table in tables]
 
             if table_names:
-                # Automatically display the first table
                 first_table_name = table_names[0]
                 query = f"SELECT * FROM {first_table_name}"
                 df = pd.read_sql_query(query, conn)
