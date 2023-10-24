@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-wavs_path="audios/audios-data"
+wavs_path="audios_transformation/audios-data"
 def encode_single_sample(wav_file,frame_length,frame_step,fft_length):
     file = tf.io.read_file(wavs_path+'/'+wav_file)
     
